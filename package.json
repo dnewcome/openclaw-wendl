@@ -1,0 +1,28 @@
+{
+  "name": "@dnuke/openclaw-wendl",
+  "version": "0.1.0",
+  "description": "Wendl OpenClaw plugin — /limits and /stats budget commands over a LiteLLM proxy",
+  "type": "module",
+  "main": "dist/plugin.js",
+  "files": ["dist", "openclaw.plugin.json", "README.md"],
+  "scripts": {
+    "build": "tsc"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.5.27"
+  },
+  "peerDependenciesMeta": {
+    "openclaw": { "optional": true }
+  },
+  "devDependencies": {
+    "openclaw": ">=2026.6.11",
+    "typescript": "^5.9.3"
+  },
+  "openclaw": {
+    "extensions": "./dist/plugin.js",
+    "runtimeExtensions": "./dist/plugin.js",
+    "compat": {
+      "pluginApi": ">=2026.5.27"
+    }
+  }
+}
