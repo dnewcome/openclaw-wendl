@@ -2,7 +2,7 @@
 // Note: aggregates ALL traffic the proxy recorded (the OpenClaw plugin config
 // doesn't carry per-group virtual keys the way the nanoclaw build does). Scope
 // via `keys` later if you mint per-agent keys.
-import { onboardingFooter } from './onboard.js';
+import { onboardingFooter, noRouterMessage } from './onboard.js';
 const DEFAULT_BASELINES = [
     { name: 'Claude Opus 4.8', in: 15, out: 75 },
     { name: 'Claude Sonnet 5', in: 3, out: 15 },
@@ -12,7 +12,7 @@ export async function buildStatsReport(cfg) {
     const base = cfg.litellmBaseUrl || 'http://localhost:4000';
     const key = cfg.litellmMasterKey;
     if (!key)
-        return '⚠️ /stats: litellmMasterKey not configured for the Wendl plugin.';
+        return noRouterMessage('/stats');
     let logs = [];
     try {
         const res = await fetch(`${base}/spend/logs`, { headers: { Authorization: `Bearer ${key}` } });
@@ -22,7 +22,7 @@ export async function buildStatsReport(cfg) {
         logs = Array.isArray(j) ? j : [];
     }
     catch (err) {
-        return `⚠️ /stats: could not reach the router at ${base} (${err.message}).`;
+        return `⚠️ /stats: configured, but couldn't reach the router at ${base} (${err.message}). Is the Wendl sidecar running?`;
     }
     let inTok = 0;
     let outTok = 0;

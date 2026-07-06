@@ -4,7 +4,7 @@
 // via `keys` later if you mint per-agent keys.
 
 import { LimitsConfig } from './limits.js';
-import { onboardingFooter } from './onboard.js';
+import { onboardingFooter, noRouterMessage } from './onboard.js';
 
 export interface StatsConfig extends LimitsConfig {
   baselines?: Array<{ name: string; in: number; out: number }>;
@@ -25,7 +25,7 @@ interface SpendLog {
 export async function buildStatsReport(cfg: StatsConfig): Promise<string> {
   const base = cfg.litellmBaseUrl || 'http://localhost:4000';
   const key = cfg.litellmMasterKey;
-  if (!key) return '⚠️ /stats: litellmMasterKey not configured for the Wendl plugin.';
+  if (!key) return noRouterMessage('/stats');
 
   let logs: SpendLog[] = [];
   try {
@@ -34,7 +34,7 @@ export async function buildStatsReport(cfg: StatsConfig): Promise<string> {
     const j = await res.json();
     logs = Array.isArray(j) ? (j as SpendLog[]) : [];
   } catch (err) {
-    return `⚠️ /stats: could not reach the router at ${base} (${(err as Error).message}).`;
+    return `⚠️ /stats: configured, but couldn't reach the router at ${base} (${(err as Error).message}). Is the Wendl sidecar running?`;
   }
 
   let inTok = 0;

@@ -1,5 +1,6 @@
 // Shared /limits report logic — the same LiteLLM spend readout used by the
 // nanoclaw build, here parameterized by OpenClaw plugin config instead of .env.
+import { noRouterMessage } from './onboard.js';
 const KEY_LABEL = {
     team: 'team chat (interactive)',
     ops: 'cron / automation',
@@ -12,7 +13,7 @@ export async function buildLimitsReport(cfg) {
     const base = cfg.litellmBaseUrl || 'http://localhost:4000';
     const key = cfg.litellmMasterKey;
     if (!key)
-        return '⚠️ /limits: litellmMasterKey not configured for the Wendl plugin.';
+        return noRouterMessage('/limits');
     const want = new Set(cfg.keys && cfg.keys.length ? cfg.keys : ['team', 'ops']);
     let keys = [];
     try {
@@ -24,7 +25,7 @@ export async function buildLimitsReport(cfg) {
         keys = (await res.json());
     }
     catch (err) {
-        return `⚠️ /limits: could not reach the router at ${base} (${err.message}).`;
+        return `⚠️ /limits: configured, but couldn't reach the router at ${base} (${err.message}). Is the Wendl sidecar running?`;
     }
     const shown = keys.filter((k) => k.key_alias && want.has(k.key_alias));
     const lines = ['**Wendl limits** — 30-day window', ''];
