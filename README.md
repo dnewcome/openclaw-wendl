@@ -4,9 +4,12 @@ Adds **`/limits`**, **`/stats`**, and **`/wendl`** to OpenClaw: per-key budget c
 spend, money-saved-vs-premium, and a one-command intro to the managed service — all
 with **zero token cost** (the commands run without invoking the agent).
 
-The plugin is free and talks only to *your own* LiteLLM proxy. It's the front door
-to [Wendl](https://wendl.ai): install it, watch `/stats` show what you're saving,
-and onboard to the managed service when you want us to run and keep tuning it.
+The plugin is free and talks only to *your own* router — the lightweight **Wendl
+gateway** (no Postgres, one process) or any LiteLLM-compatible proxy. It needs only
+the `/spend/keys` + `/spend/logs` endpoints both expose, so it's a drop-in either
+way. It's the front door to [Wendl](https://wendl.ai): install it, watch `/stats`
+show what you're saving, and onboard to the managed service when you want us to run
+and keep tuning it.
 
 > Source of truth is the [wendl.ai](https://github.com/dnewcome/wendl.ai) monorepo
 > (`plugins/openclaw`). **This repo is the built, install-ready release** — it ships
@@ -56,7 +59,8 @@ plugin reads this config from `api.pluginConfig` at register time.
 ## The routing itself is plain OpenClaw config (no plugin)
 
 This plugin is only the budget/visibility UX. The actual tiered routing is OpenClaw
-pointing at the LiteLLM proxy as a provider — add to `openclaw.json`:
+pointing at your router (the Wendl gateway or a LiteLLM proxy) as a provider — add
+to `openclaw.json`:
 
 ```jsonc
 {
@@ -80,7 +84,8 @@ pointing at the LiteLLM proxy as a provider — add to `openclaw.json`:
 
 ## Requirements & caveats
 
-- A running **LiteLLM proxy** (the Wendl sidecar) reachable at `litellmBaseUrl`.
+- A running **router** reachable at `litellmBaseUrl` — the lightweight **Wendl
+  gateway** (no Postgres) or a LiteLLM proxy. Stand one up via [wendl.ai](https://wendl.ai/start.html).
 - **OpenClaw ≥ 2026.5.27** (validated against `2026.6.11`).
 - Validated against the OpenClaw SDK **types** and builds clean, but not yet run on a
   live gateway here — treat the first `/limits` as a smoke test and run
