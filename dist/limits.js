@@ -1,5 +1,6 @@
-// Shared /limits report logic — the same LiteLLM spend readout used by the
-// nanoclaw build, here parameterized by OpenClaw plugin config instead of .env.
+// Shared /limits report logic — the same spend readout (from the Wendl gateway or
+// any LiteLLM-compatible proxy) used by the nanoclaw build, here parameterized by
+// OpenClaw plugin config instead of .env.
 import { noRouterMessage } from './onboard.js';
 const KEY_LABEL = {
     team: 'team chat (interactive)',

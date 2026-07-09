@@ -1,7 +1,7 @@
 {
   "id": "wendl",
   "name": "Wendl",
-  "description": "Budget-aware routing companion for a LiteLLM proxy: /limits shows per-key caps + spend, with zero token cost.",
+  "description": "Budget-aware companion for the Wendl gateway (or any LiteLLM-compatible proxy): /limits and /stats show per-key caps, spend, and savings at zero token cost.",
   "version": "0.1.0",
   "commandAliases": [
     { "name": "limits", "kind": "runtime-slash", "cliCommand": "limits" },
@@ -28,8 +28,8 @@
     "required": ["litellmMasterKey"]
   },
   "uiHints": {
-    "litellmMasterKey": { "label": "LiteLLM master key", "placeholder": "sk-...", "sensitive": true },
-    "litellmBaseUrl": { "label": "LiteLLM base URL", "placeholder": "http://localhost:4000" },
+    "litellmMasterKey": { "label": "Router master key (Wendl gateway / LiteLLM)", "placeholder": "sk-...", "sensitive": true },
+    "litellmBaseUrl": { "label": "Router base URL (Wendl gateway / LiteLLM)", "placeholder": "http://localhost:4000" },
     "globalCapUsd": { "label": "Global safety cap (USD / 30d)", "placeholder": "300" }
   }
 }

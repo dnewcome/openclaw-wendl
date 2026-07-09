@@ -5,9 +5,11 @@ import { buildWendlIntro } from './onboard.js';
 // Wendl OpenClaw plugin.
 //
 // Registers the `/limits` command, which runs WITHOUT invoking the agent
-// (zero token cost) and prints per-key budget caps + spend read from a LiteLLM
-// proxy. The routing itself is plain OpenClaw config (models.providers -> the
-// proxy) — see README.md; this plugin is the budget/visibility UX on top.
+// (zero token cost) and prints per-key budget caps + spend read from the router
+// proxy — the Wendl gateway (../../gateway) or any LiteLLM-compatible proxy; the
+// plugin only needs the /spend/keys + /spend/logs endpoints both expose. The
+// routing itself is plain OpenClaw config (models.providers -> the proxy) — see
+// README.md; this plugin is the budget/visibility UX on top.
 //
 // Verified against the openclaw SDK plugin-entry types (2026.6.x): the plugin's
 // OWN config (litellmBaseUrl, litellmMasterKey, keys, globalCapUsd — resolved by
