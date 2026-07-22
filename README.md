@@ -18,7 +18,7 @@ and keep tuning it.
 ## Install from GitHub
 
 ```bash
-openclaw plugins install git:github.com/dnewcome/openclaw-wendl@main
+openclaw plugins install git:github.com/wendl-ai/openclaw-wendl@main
 openclaw plugins enable wendl
 ```
 
